@@ -1,0 +1,38 @@
+name: Sync Repos
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v2
+
+      - name: Checkout luci-app-argon-config
+        uses: actions/checkout@v2
+        with:
+          repository: 'jerrykuku/luci-app-argon-config'
+          path: 'luci-app-argon-config'
+
+      - name: Checkout luci-theme-argon
+        uses: actions/checkout@v2
+        with:
+          repository: 'jerrykuku/luci-theme-argon'
+          path: 'luci-theme-argon'
+
+      - name: Checkout luci-app-lvgl-sysinfo
+        uses: actions/checkout@v2
+        with:
+          repository: 'fishc8/luci-app-lvgl-sysinfo'
+          path: 'luci-app-lvgl-sysinfo'
+
+      - name: Update this repository
+        run: |
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your@email.com'
+          git add .
+          git commit -m "Sync repositories"
+          git push origin main
